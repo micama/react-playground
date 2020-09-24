@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import cn from 'classnames';
 
-function App() {
+import {
+  useThemeType,
+  withEnhancedTheme,
+  ThemeContext,
+} from './contexts/theme.context';
+import { Sub } from './Sub';
+
+import styles from './App.module.scss';
+
+const App = () => {
+  const type = useThemeType();
+  const { setSavedType } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <p className={cn(styles.App, styles.thick)}>{`Theme type = ${type}`}</p>
+      <Sub />
+      <button
+        onClick={() =>
+          setSavedType((savedType: string) =>
+            savedType === 'lite' ? 'dark' : 'lite'
+          )
+        }
+      >
+        Click to toggle style
+      </button>
+    </>
   );
-}
+};
 
-export default App;
+export default withEnhancedTheme(styles, App);
