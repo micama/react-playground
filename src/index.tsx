@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import { ThemeProvider } from './contexts/theme.context';
+import { App } from './App';
+import { ThemeProvider } from './contexts/theme/theme.context';
+import { ThemeType } from './contexts/theme/theme.types';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider type="lite">
-      <App />
+    <ThemeProvider type={ThemeType.LITE}>
+      <App label="some text from parent" />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

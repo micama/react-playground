@@ -1,34 +1,27 @@
 import React, { useContext } from 'react';
-import cn from 'classnames';
-
-import {
-  useThemeType,
-  withEnhancedTheme,
-  ThemeContext,
-} from './contexts/theme.context';
-import { Sub } from './Sub';
 
 import styles from './App.module.scss';
+import { Button } from './components/button';
+import { TextLabel } from './components/text-label';
+import {
+  useThemeType,
+  ThemeContext,
+  withTheme,
+} from './contexts/theme/theme.context';
 
-const App = () => {
+interface IAppProps {
+  label: string;
+}
+
+export const App = withTheme(({ label }: IAppProps) => {
   const type = useThemeType();
-  const { setSavedType } = useContext(ThemeContext);
+  const { toggleStyle } = useContext(ThemeContext);
 
   return (
-    <>
-      <p className={cn(styles.App, styles.thick)}>{`Theme type = ${type}`}</p>
-      <Sub />
-      <button
-        onClick={() =>
-          setSavedType((savedType: string) =>
-            savedType === 'lite' ? 'dark' : 'lite'
-          )
-        }
-      >
-        Click to toggle style
-      </button>
-    </>
+    <div className={styles.app}>
+      <TextLabel text={`Theme type = ${type}`} className={styles.thick} />
+      <TextLabel text={label} />
+      <Button text="Click to change type" onClick={toggleStyle} />
+    </div>
   );
-};
-
-export default withEnhancedTheme(styles, App);
+});
